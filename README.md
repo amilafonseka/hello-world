@@ -1,2 +1,2 @@
 # hello-world
-This is my first repository
+I'm Amila Fonseka. I recently migrated to Australia and searhing for jobs now.
