@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'echo something'
+                input "Does the staging environment look ok?"
             }
         }
     }
