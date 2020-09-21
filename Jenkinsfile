@@ -3,26 +3,25 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'echo "Fail!"; exit 1'
+                sh 'echo something'
             }
         }
     }
-    post {
-        always {
-            echo 'This will always run'
-        }
-        success {
-            echo 'This will run only if successful'
-        }
-        failure {
-            echo 'This will run only if failed'
-        }
-        unstable {
-            echo 'This will run only if the run was marked as unstable'
-        }
-        changed {
-            echo 'This will run only if the state of the Pipeline has changed'
-            echo 'For example, if the Pipeline was previously failing but is now successful'
-        }
-    }
+  parameters {
+    booleanParam(
+      name: 'DEPLOY_DEV_STAGE',
+      defaultValue: false,
+      description: 'This will deploy to the development environment.'
+    )
+    booleanParam(
+      name: 'DEPLOY_STAGING_STAGE',
+      defaultValue: false,
+      description: 'Deploy to staging. Note: Only the migration-postgres branch can be deployed to prod.'
+    )
+    booleanParam(
+      name: 'DEPLOY_PROD_STAGE',
+      defaultValue: false,
+      description: 'Deploy to production. Note: Only the master branch can be deployed to prod.'
+    )
+  }
 }
