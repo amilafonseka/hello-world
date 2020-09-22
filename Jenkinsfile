@@ -4,6 +4,9 @@ pipeline {
         stage('Test') {
             steps {
                 input "Does the staging environment look ok?"
+                sh '''
+                    liquibase update
+                   '''
             }
         }
     }
