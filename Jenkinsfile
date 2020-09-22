@@ -2,13 +2,23 @@ pipeline {
     agent any
     stages {
         stage('Run Migration Scripts before Gradle Build') {
-            input {
-                message "Should we continue?"
-                ok "Yes, we should."
-                submitter "alice,bob"
-                parameters {
-                    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+            steps {
+             script {
+                env.flagError = "false"
+                try {
+                    input(message: 'Do you want to run the DB migration scripts', ok: 'Proceed')
+
+                }catch(e){
+                    println "input aborted or timeout expired, will try to rollback."
+                    env.flagError = "true"        
                 }
+              }
+            }
+        }
+        
+        stage('Run the DB migration scripts before the Gradl build') {
+            when{
+                expression { env.flagError == "false" }
             }
             steps {
                 sh '''
@@ -19,13 +29,7 @@ pipeline {
         
         stage('Gradle build') {
             steps {
-                sh 'echo gradle build'
-            }
-        }
-        
-        stage('Production Deployment') {
-            steps {
-                sh 'echo production deployment'
+                sh 'echo Gradle build'
             }
         }
         
