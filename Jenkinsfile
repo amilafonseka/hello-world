@@ -2,8 +2,15 @@ pipeline {
     agent any
     stages {
         stage('Run Migration Scripts before Gradle Build') {
+            input {
+                message "Should we continue?"
+                ok "Yes, we should."
+                submitter "alice,bob"
+                parameters {
+                    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+                }
+            }
             steps {
-                input "Do you want to run the DB migration scripts?"
                 sh '''
                     liquibase update
                    '''
