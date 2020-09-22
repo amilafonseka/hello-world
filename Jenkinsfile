@@ -1,30 +1,36 @@
 pipeline {
     agent any
     stages {
-        stage('Test') {
+        stage('Run Migration Scripts') {
             steps {
-                input "Does the staging environment look ok?"
+                input "Do you want to run the DB migration scripts?"
+                sh '''
+                    liquibase update
+                   '''
+            }
+        }
+        
+        stage('Gradle build') {
+            steps {
+                sh 'echo gradle build'
+            }
+        }
+        
+        stage('Production Deployment') {
+            steps {
+                sh 'echo production deployment'
+            }
+        }
+        
+        stage('Run Migration Scripts') {
+            steps {
+                input "Do you want to run the DB migration scripts?"
                 sh '''
                     liquibase update
                    '''
             }
         }
     }
-  parameters {
-    booleanParam(
-      name: 'DEPLOY_DEV_STAGE',
-      defaultValue: false,
-      description: 'This will deploy to the development environment.'
-    )
-    booleanParam(
-      name: 'DEPLOY_STAGING_STAGE',
-      defaultValue: false,
-      description: 'Deploy to staging. Note: Only the migration-postgres branch can be deployed to prod.'
-    )
-    booleanParam(
-      name: 'DEPLOY_PROD_STAGE',
-      defaultValue: false,
-      description: 'Deploy to production. Note: Only the master branch can be deployed to prod.'
-    )
-  }
+    
+    
 }
