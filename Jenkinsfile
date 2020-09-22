@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Run Migration Scripts') {
+        stage('Run Migration Scripts before Gradle Build') {
             steps {
                 input "Do you want to run the DB migration scripts?"
                 sh '''
@@ -22,7 +22,7 @@ pipeline {
             }
         }
         
-        stage('Run Migration Scripts') {
+        stage('Run Migration Scripts after Prod deployment') {
             steps {
                 input "Do you want to run the DB migration scripts?"
                 sh '''
