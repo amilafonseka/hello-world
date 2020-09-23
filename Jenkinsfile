@@ -21,6 +21,10 @@ pipeline {
                 expression { env.flagError == "false" }
             }
             steps {
+                docker {
+                    image 'liquibase:latest'
+                    reuseNode true
+                }
                 sh '''
                     liquibase update
                    '''
