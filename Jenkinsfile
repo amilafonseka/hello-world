@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker { image 'liquibase:latest' }
+        docker { image 'liquibase/liquibase' }
     }
     stages {
         stage('Run Migration Scripts before Gradle Build') {
@@ -21,12 +21,6 @@ pipeline {
         stage('Run the DB migration scripts before the Gradl build') {
             when{
                 expression { env.flagError == "false" }
-            }
-            agent {
-                docker {
-                  image 'liquibase:latest'
-                  reuseNode true
-                }
             }
             steps {
                 sh '''
