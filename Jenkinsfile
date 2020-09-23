@@ -1,3 +1,5 @@
+@Library('ciinabox') _
+
 pipeline {
     agent {
        node {
