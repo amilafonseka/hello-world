@@ -28,7 +28,11 @@ pipeline {
               }
             steps {
                 sh '''
-                    liquibase update
+                    docker run --rm -v 
+                    /home/amilafonseka/.jenkins/workspace/My_Pipeline_master:/liquibase/changelog liquibase/liquibase 
+                    --url="jdbc:postgresql://aurora.dev1.leaseeagle.com:5432/postgres?currentSchema=leaseeagle25_gj" 
+                    --changeLogFile=/liquibase/changelog/samplechangelog.h2.sql
+                    --username=postgres --password=BhHMCykkd6YbvE3P update
                    '''
             }
         }
