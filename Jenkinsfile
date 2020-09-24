@@ -23,7 +23,13 @@ pipeline {
 
             steps {
               sh '''
-                docker exec pg-docker psql --version
+                docker run --rm -v /home/amilafonseka/Apps/Liquibase/examples/sql:/liquibase/changelog 
+                liquibase/liquibase 
+                --url="jdbc:postgresql://aurora.dev1.leaseeagle.com:5432/postgres?currentSchema=leaseeagle25_gj" 
+                --changeLogFile=../liquibase/changelog/samplechangelog.h2.sql 
+                --username=postgres 
+                --password=BhHMCykkd6YbvE3P 
+                update
               '''
             }
         }
