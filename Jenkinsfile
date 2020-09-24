@@ -23,7 +23,7 @@ pipeline {
 
             steps {
               sh '''
-                docker exec -it pg-docker psql --version
+                docker exec pg-docker psql --version
               '''
             }
         }
