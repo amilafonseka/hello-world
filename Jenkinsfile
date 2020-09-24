@@ -1,10 +1,6 @@
-@Library('ciinabox') _
-
 pipeline {
   agent {
-    node {
-      label 'docker'
-    }
+    docker { image 'node:14-alpine' }
   }
     stages {
         stage('Run Migration Scripts before Gradle Build') {
@@ -29,7 +25,7 @@ pipeline {
 
             steps {
                 sh '''
-                    liquibase --version
+                    node --version
                    '''
             }
         }
