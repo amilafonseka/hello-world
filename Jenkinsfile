@@ -1,12 +1,11 @@
 @Library('ciinabox') _
 
 pipeline {
-                agent {
-                docker {
-                  image 'liquibase/liquibase'
-                  reuseNode true
-                }
-              }
+  agent {
+    node {
+      label 'docker'
+    }
+  }
     stages {
         stage('Run Migration Scripts before Gradle Build') {
             steps {
