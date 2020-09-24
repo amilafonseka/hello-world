@@ -1,10 +1,5 @@
 pipeline {
   agent any
-  environment{
-    POSTGRES_HOST = 'aurora.dev1.leaseeagle.com'
-    POSTGRES_USER = 'postgres'
-    POSTGRES_PASSWORD = 'BhHMCykkd6YbvE3P'
-  }
     stages {
         stage('Run Migration Scripts before Gradle Build') {
             steps {
