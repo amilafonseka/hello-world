@@ -1,6 +1,6 @@
 pipeline {
   agent {
-    docker { image 'node:14-alpine' }
+    docker { image 'liquibase:liquibase' }
   }
     stages {
         stage('Run Migration Scripts before Gradle Build') {
@@ -25,7 +25,7 @@ pipeline {
 
             steps {
                 sh '''
-                    node --version
+                    liquibase --version
                    '''
             }
         }
