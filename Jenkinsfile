@@ -1,6 +1,9 @@
 pipeline {
-  agent {
-    docker { image 'liquibase/liquibase' }
+  agent any
+  environment{
+    POSTGRES_HOST = 'aurora.dev1.leaseeagle.com'
+    POSTGRES_USER = 'postgres'
+    POSTGRES_PASSWORD = 'BhHMCykkd6YbvE3P'
   }
     stages {
         stage('Run Migration Scripts before Gradle Build') {
@@ -24,9 +27,17 @@ pipeline {
             }
 
             steps {
-                sh '''
-                    liquibase --version
-                   '''
+              script{
+                docker.image('postgres:9.6').withRun(
+                  "-h ${env.POSTGRES_HOST} -e POSTGRES_USER=${env.POSTGRES_USER}"
+                ){
+                  db -> docker.image('postgres:9.6'){
+                    sh '''
+                      psql --version
+                      '''
+                  }
+                }
+              }
             }
         }
         
