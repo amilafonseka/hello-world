@@ -1,6 +1,6 @@
 pipeline {
   agent {
-    docker { image 'liquibase' }
+    docker { image 'liquibase/liquibase' }
   }
     stages {
         stage('Run Migration Scripts before Gradle Build') {
