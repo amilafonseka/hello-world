@@ -27,17 +27,9 @@ pipeline {
             }
 
             steps {
-              script{
-                docker.image('postgres:9.6').withRun(
-                  "-h ${env.POSTGRES_HOST} -e POSTGRES_USER=${env.POSTGRES_USER}"
-                ){
-                  db -> docker.image('postgres:9.6'){
-                    sh '''
-                      psql --version
-                      '''
-                  }
-                }
-              }
+              sh '''
+                docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
+              '''
             }
         }
         
