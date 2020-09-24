@@ -24,6 +24,7 @@ pipeline {
             steps {
               sh '''
                 docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
+                psql --version
               '''
             }
         }
