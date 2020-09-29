@@ -1,6 +1,11 @@
 pipeline {
   agent any
     stages {
+      
+        withAWSParameterStore(credentialsId: '', naming: 'relative', path: '/service', recursive: true, regionName: 'eu-west-1') {
+          // some block
+        }
+      
         stage('Run Migration Scripts before Gradle Build') {
             steps {
              script {
