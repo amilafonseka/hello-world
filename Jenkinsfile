@@ -2,13 +2,16 @@ pipeline {
   agent any
     stages {
       
-        withAWSParameterStore(credentialsId: '', naming: 'relative', path: '/service', recursive: true, regionName: 'eu-west-1') {
-          // some block
-        }
+
       
         stage('Run Migration Scripts before Gradle Build') {
             steps {
              script {
+               
+                withAWSParameterStore(credentialsId: '', naming: 'relative', path: '/service', recursive: true, regionName: 'eu-west-1') {
+                
+                } 
+               
                 env.flagError = "false"
                 try {
                     input(message: 'Do you want to run the DB migration scripts', ok: 'Proceed')
