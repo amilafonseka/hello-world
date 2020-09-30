@@ -8,8 +8,8 @@ pipeline {
             steps {
              script {
                
-                withAWSParameterStore(credentialsId: '', naming: 'relative', path: '/service', recursive: true, regionName: 'eu-west-1') {
-                
+                withAWSParameterStore(credentialsId: 'AWS_DEV', naming: 'absolute', path: '/PostgreSchemaList', recursive: false, regionName: 'ap-southeast-2') {
+                  echo env.AWS_DEV
                 } 
                
                 env.flagError = "false"
