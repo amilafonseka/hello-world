@@ -8,7 +8,7 @@ pipeline {
             steps {
              script {
                
-                withAWSParameterStore(credentialsId: 'AWS_DEV', naming: 'absolute', path: '/PostgreSchemaList', recursive: false, regionName: 'ap-southeast-2') {
+                withAWSParameterStore(credentialsId: 'AWS_DEV', naming: 'absolute', path: '/PostgreSchemaList', recursive: true, regionName: 'ap-southeast-2') {
                   echo env.PostgreSchemaList
                 } 
                
