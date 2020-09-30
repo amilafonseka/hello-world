@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-        POSTGRES_SCHEMAS_LIST = '$(aws ssm get-parameters --region $REGION --names /PostgreSchemaList )'
+        POSTGRES_SCHEMAS_LIST = '$(aws ssm get-parameters --region ap-southeast-2 --names /PostgreSchemaList --query Parameters[0].Value)'
   }
     stages {
       
@@ -30,7 +30,7 @@ pipeline {
 
             steps {
               sh '''
-                aws ssm get-parameters --region ap-southeast-2 --names /PostgreSchemaList --query Parameters[0].Value
+                ${env.POSTGRES_SCHEMAS_LIST}
                 docker run --rm -v ${JENKINS_HOME}/workspace/My_Pipeline_master:/liquibase/changelog liquibase/liquibase --url="jdbc:postgresql://aurora.dev1.leaseeagle.com:5432/postgres?currentSchema=leaseeagle25_gj" --changeLogFile=../liquibase/changelog/samplechangelog.h2.sql --username=postgres --password=BhHMCykkd6YbvE3P update
                 docker ps -a
               '''
