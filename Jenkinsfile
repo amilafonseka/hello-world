@@ -9,7 +9,7 @@ pipeline {
              script {
                
                 withAWSParameterStore(credentialsId: 'AWS_DEV', naming: 'absolute', path: '/PostgreSchemaList', recursive: false, regionName: 'ap-southeast-2') {
-                  echo env.AWS_DEV
+                  echo env.PostgreSchemaList
                 } 
                
                 env.flagError = "false"
