@@ -29,11 +29,12 @@ pipeline {
               sh '''
                 #!/bin/bash
                 postgresSchemasList=$(aws ssm get-parameters --region ap-southeast-2 --names /PostgreSchemaList --query Parameters[0].Value)
+                dev1PostgresPassword=$(aws ssm get-parameters --region ap-southeast-2 --names /leaseeagle/dev1/aurora_postgres_password --query Parameters[0].Value --with-decryption)
                 for i in $(echo $postgresSchemasList | sed -e 's/^"//' -e 's/"$//' -e 's/,/ /g' )
                 do
                 # call your procedure/other scripts here below
                  echo "$i"
-                  docker run --rm -v ${JENKINS_HOME}/workspace/My_Pipeline_master:/liquibase/changelog liquibase/liquibase --url="jdbc:postgresql://aurora.dev1.leaseeagle.com:5432/postgres?currentSchema=$i" --changeLogFile=../liquibase/changelog/samplechangelog.h2.sql --username=postgres --password=BhHMCykkd6YbvE3P update
+                  docker run --rm -v ${JENKINS_HOME}/workspace/My_Pipeline_master:/liquibase/changelog liquibase/liquibase --url="jdbc:postgresql://aurora.dev1.leaseeagle.com:5432/postgres?currentSchema=$i" --changeLogFile=../liquibase/changelog/samplechangelog.h2.sql --username=postgres --password=$dev1PostgresPassword update
                 done
               '''
             }
