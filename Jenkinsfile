@@ -26,8 +26,9 @@ pipeline {
             }
 
             steps {
-              sh '''
-                postgresSchemasList=aws ssm get-parameters --region ap-southeast-2 --names /PostgreSchemaList --query Parameters[0].Value
+              bash '''
+                #!/bin/bash
+                postgresSchemasList=$(aws ssm get-parameters --region ap-southeast-2 --names /PostgreSchemaList --query Parameters[0].Value)
                 for i in $(echo $postgresSchemasList | sed "s/,/ /g")
                 do
                 # call your procedure/other scripts here below
