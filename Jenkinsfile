@@ -29,7 +29,7 @@ pipeline {
               sh '''
                 #!/bin/bash
                 postgresSchemasList=$(aws ssm get-parameters --region ap-southeast-2 --names /PostgreSchemaList --query Parameters[0].Value)
-                dev1PostgresPassword=$(aws ssm get-parameters --region ap-southeast-2 --names /leaseeagle/dev1/aurora_postgres_password --query Parameters[0].Value --with-decryption)
+                dev1PostgresPassword=$(aws ssm get-parameters --region ap-southeast-2 --names /leaseeagle/dev1/aurora_postgres_password --query Parameters[0].Value --with-decryption | sed -e 's/^"//' -e 's/"$//')
                 for i in $(echo $postgresSchemasList | sed -e 's/^"//' -e 's/"$//' -e 's/,/ /g' )
                 do
                 # call your procedure/other scripts here below
