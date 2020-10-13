@@ -28,7 +28,7 @@ pipeline {
             steps {
               sh '''
                 #!/bin/bash
-                echo ${BRANCH_NAME}
+                echo ${WORKSPACE}
                 aws configure set aws_access_key_id 
                 aws configure set aws_secret_access_key
                 postgresSchemasList=$(aws ssm get-parameters --region ap-southeast-2 --names /PostgreSchemaList --query Parameters[0].Value)
